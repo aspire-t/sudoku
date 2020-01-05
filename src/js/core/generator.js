@@ -4,7 +4,9 @@ const Toolkit = require('./toolkit')
 
 class Generator {
   generate () {
-    while (!this.internalGenerate()) { }
+    while (!this.internalGenerate()) {
+      console.log("try again");
+    }
   }
 
   internalGenerate () {
@@ -16,7 +18,7 @@ class Generator {
       .map(row => Toolkit.matrixToolkit.shuffle(row))// 打乱排序
 
     // 入口方法
-    for (let n = 1; n < 9; n++) {
+    for (let n = 1; n <= 9; n++) {
       if (!this.fillNumber(n)) return false
     }
     return true
@@ -52,6 +54,7 @@ class Generator {
         row[colIndex] = 0
         continue
       }
+
       return true
     }
     return false
