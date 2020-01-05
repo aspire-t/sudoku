@@ -1,7 +1,7 @@
 /**
  * 矩阵和数据 工具集
  */
-export const matrixToolkit = {
+const matrixToolkit = {
   makeRow (v = 0) {
     const array = new Array(9)
     array.fill(v)
@@ -29,7 +29,15 @@ export const matrixToolkit = {
   /**
    * 检查指定位置可以填写数字n
    */
-  checkFillable () {
+  checkFillable (matrix, n, rowIndex, colIndex) {
+    const row = matrix[rowIndex] // 获取一行的数据
+    const column = this.makeRow().map((v, i) => matrix[i][colIndex])// 获取一列的数据
+    const { boxIndex } = boxToolkit.convertToBoxIndex(rowIndex, colIndex)// 找到宫所在的位置
+    const box = boxToolkit.getBoxCells(matrix, boxIndex)// 获取宫的数据
+
+    for (let i = 0; i < 9; i++) {
+      if (row[i] === n || column[i] === n || box[i] === n) return false
+    }
     return true
   }
 }
@@ -37,6 +45,34 @@ export const matrixToolkit = {
 /**
  * 共坐标系工具
  */
-export const boxToolkit = {
+const boxToolkit = {
+  getBoxCells (matrix, boxIndex) {
+    const startRowIndex = Math.floor(boxIndex / 3) * 3
+    const startColIndex = boxIndex % 3 * 3
+    const result = []
+    for (let cellIndex = 0; cellIndex < 9; cellIndex++) {
+      const rowIndex = startRowIndex + Math.floor(cellIndex / 3)
+      const colIndex = startColIndex + cellIndex % 3
+      result.push(matrix[rowIndex][colIndex])
+    }
+    return result
+  },
+  // 计算宫的坐标
+  convertToBoxIndex (rowIndex, colIndex) {
+    return {
+      boxIndex: Math.floor(rowIndex / 3) * 3 + Math.floor(colIndex / 3),
+      cellIndex: rowIndex % 3 * 3 + colIndex % 3
+    }
+  },
+  convertFromBoxIndex (boxIndex, cellIndex) {
+    return {
+      rowIndex: Math.floor(boxIndex / 3) * 3 + Math.floor(cellIndex / 3),
+      colIndex: boxIndex % 3 * 3 + cellIndex % 3
+    }
+  }
+}
 
+module.exports = {
+  matrixToolkit,
+  boxToolkit
 }

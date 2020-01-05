@@ -1,23 +1,29 @@
 //　生成数独解决方案
-import { makeMatrix, checkFillable, shuffle } from './toolkit'
+// import { matrixToolkit } from './toolkit'
+const Toolkit = require('./toolkit')
 
-export class Generator {
+class Generator {
   generate () {
+    while (!this.internalGenerate()) { }
+  }
+
+  internalGenerate () {
     // 生成一个值都是0的 9*9的矩阵
-    this.matrix = makeMatrix()
+    this.matrix = Toolkit.matrixToolkit.makeMatrix()
     // 生成一个值是随机的 9*9的矩阵
-    this.orders = makeMatrix()
+    this.orders = Toolkit.matrixToolkit.makeMatrix()
       .map(row => row.map((v, i) => i))// 给矩阵赋值1-9
-      .map(row => shuffle(row))// 打乱排序
+      .map(row => Toolkit.matrixToolkit.shuffle(row))// 打乱排序
 
     // 入口方法
-    for (let n = 0; n < 9; n++) {
-      this.fillNumber(n)
+    for (let n = 1; n < 9; n++) {
+      if (!this.fillNumber(n)) return false
     }
+    return true
   }
 
   fillNumber (n) {
-    this.fillRow(n, 0)
+    return this.fillRow(n, 0)
   }
 
   fillRow (n, rowIndex) {
@@ -35,7 +41,7 @@ export class Generator {
       }
 
       // 检查这个位置是否可以填 n
-      if (!checkFillable()) {
+      if (!Toolkit.matrixToolkit.checkFillable(this.matrix, n, rowIndex, colIndex)) {
         continue
       }
 
@@ -48,7 +54,11 @@ export class Generator {
       }
       return true
     }
-
     return false
   }
 }
+
+
+const generator = new Generator()
+generator.generate()
+console.log(generator.matrix);
