@@ -2,20 +2,20 @@
 // import { matrixToolkit } from './toolkit'
 const Toolkit = require('./toolkit')
 
-class Generator {
-  generate () {
+module.exports = class Generator {
+  generate() {
     while (!this.internalGenerate()) {
       console.log("try again");
     }
   }
 
-  internalGenerate () {
+  internalGenerate() {
     // 生成一个值都是0的 9*9的矩阵
     this.matrix = Toolkit.matrixToolkit.makeMatrix()
     // 生成一个值是随机的 9*9的矩阵
     this.orders = Toolkit.matrixToolkit.makeMatrix()
-      .map(row => row.map((v, i) => i))// 给矩阵赋值1-9
-      .map(row => Toolkit.matrixToolkit.shuffle(row))// 打乱排序
+      .map(row => row.map((v, i) => i)) // 给矩阵赋值1-9
+      .map(row => Toolkit.matrixToolkit.shuffle(row)) // 打乱排序
 
     // 入口方法
     for (let n = 1; n <= 9; n++) {
@@ -24,17 +24,17 @@ class Generator {
     return true
   }
 
-  fillNumber (n) {
+  fillNumber(n) {
     return this.fillRow(n, 0)
   }
 
-  fillRow (n, rowIndex) {
+  fillRow(n, rowIndex) {
     if (rowIndex > 8) {
       return true
     }
 
     const row = this.matrix[rowIndex]
-    const orders = this.orders[rowIndex]// 从一个乱序的数组中取值，为了保证，取出来的矩阵是不规则的
+    const orders = this.orders[rowIndex] // 从一个乱序的数组中取值，为了保证，取出来的矩阵是不规则的
     for (let i = 0; i < 9; i++) {
       const colIndex = orders[i]
       // 如果这个位置已经有值，跳过
@@ -62,6 +62,6 @@ class Generator {
 }
 
 
-const generator = new Generator()
-generator.generate()
-console.log(generator.matrix);
+// const generator = new Generator()
+// generator.generate()
+// console.log(generator.matrix);

@@ -61,4 +61,65 @@ class Checker {
 		this._success = this._matrixMarks.every(row => row.every(mark => mark))
 		return this._success
 	}
+	// 检查行
+	checkRows() {
+		for (let rowIndex = 0; rowIndex < 9; rowIndex++) {
+			const row = this._matrix[rowIndex];
+			const marks = checkArray(row)
+
+			for (let colIndex = 0; colIndex < marks.length; colIndex++) {
+				if (!marks[colIndex]) {
+					this._matrixMarks[rowIndex[colIndex]] = false
+				}
+
+			}
+		}
+	}
+	// 检查列
+	checkColS() {
+		for (let colIndex = 0; colIndex < 9; colIndex++) {
+			const cols = [];
+			for (let rowIndex = 0; rowIndex < 9; rowIndex++) {
+				cols[rowIndex] = this._matrix[rowIndex][colIndex]
+			}
+
+			const marks = checkArray(cols)
+			for (let rowIndex = 0; rowIndex < marks.length; rowIndex++) {
+				if (!marks[rowIndex]) {
+					this._matrixMarks[rowIndex[colIndex]] = false
+				}
+			}
+		}
+	}
+	// 检查宫
+	checkBoxes() {
+		for (let boxIndex = 0; boxIndex < 9; boxIndex++) {
+			const boxes = Toolkit.boxToolkit.getBoxCells(this._matrix, boxIndex);
+			// console.log(boxes)
+			const marks = checkArray(boxes)
+			for (let cellIndex = 0; cellIndex < 9; cellIndex++) {
+				if (!marks[cellIndex]) {
+					const {
+						rowIndex,
+						colIndex
+					} = Toolkit.boxToolkit.convertFromBoxIndex(boxIndex, cellIndex)
+					this._matrixMarks[rowIndex[colIndex]] = false
+				}
+			}
+		}
+	}
 }
+
+const Generator = require('./generator')
+const gen = new Generator
+gen.generate()
+const matrix = gen.matrix
+const checker = new Checker(matrix)
+console.log("check result", checker.check())
+console.log(checker.matrixMarks)
+
+matrix[1][1] = 0
+matrix[2][3] = matrix[3][5] = 5
+const checker2 = new Checker(matrix)
+console.log("check result", checker2.check())
+console.log(checker2._matrixMarks)
