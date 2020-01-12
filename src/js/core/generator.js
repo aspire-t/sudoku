@@ -1,11 +1,10 @@
+import Toolkit from './toolkit'
 //　生成数独解决方案
-// import { matrixToolkit } from './toolkit'
-const Toolkit = require('./toolkit')
-
-module.exports = class Generator {
+// module.exports = class Generator {
+export default class Generator {
   generate() {
     while (!this.internalGenerate()) {
-      console.log("try again");
+      // console.log("try again");
     }
   }
 

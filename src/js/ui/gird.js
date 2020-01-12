@@ -1,5 +1,6 @@
 // 生成九宫格
-import { matrixToolkit } from '../core/toolkit'
+// const Sudoku = require('../core/sudoku')
+import Sudoku from '../core/sudoku'
 import $ from 'jquery'
 
 export class Grid {
@@ -7,8 +8,10 @@ export class Grid {
     this._container = container
   }
 
-  build () {
-    const matrix = matrixToolkit.makeMatrix()
+  build() {
+    const sudoku = new Sudoku()
+    sudoku.make()
+    const matrix = sudoku.puzzleMatrix
 
     const rowGroupClasses = ["row_g_top", "row_g_middle", "row_g_bottom"]
     const colGroupClasses = ["col_g_left", "col_g_center", "col_g_right"]
@@ -17,6 +20,7 @@ export class Grid {
       rowValues.map((cellValue, index) => {
         return $('<span>')
           .addClass(colGroupClasses[index % 3])
+          .addClass(cellValue ? "fixed" : "empty") // 如果值是0，增加empty 的class
           .text(cellValue)
       }))
 
@@ -30,7 +34,7 @@ export class Grid {
     this._container.append($divArray)
   }
 
-  layout () {
+  layout() {
     const width = $('span:first', this._$container).width()
     $('span', this._$container)
       .height(width)
