@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import './css/main.less'
+import './css/main_new.less'
 import {
   Grid
 } from './js/ui/gird'
@@ -13,10 +13,10 @@ grid.bindPopup(popupNumbers)
 
 // 检查按钮
 $('#check').on('click', e => {
-  grid.check()
-  // if (grid.check()) {
-  //   alert('成功')
-  // }
+  // grid.check()
+  if (grid.check()) {
+    alert('成功')
+  }
 
 })
 // 重置按钮
