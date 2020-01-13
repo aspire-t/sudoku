@@ -38,7 +38,7 @@ function checkArray(array) {
 // 输入 matrix矩阵 用户完成的数独数据 9*9
 // 处理： 对matrix 行、列、宫进行检查、并填写 marks
 // 输出：检查是否成功 、 marks
-class Checker {
+export default class Checker {
 	constructor(matrix) {
 		this._matrix = matrix
 		this._matrixMarks = Toolkit.matrixToolkit.makeMatrix(true)
@@ -66,12 +66,11 @@ class Checker {
 		for (let rowIndex = 0; rowIndex < 9; rowIndex++) {
 			const row = this._matrix[rowIndex];
 			const marks = checkArray(row)
-
+			console.log(marks)
 			for (let colIndex = 0; colIndex < marks.length; colIndex++) {
 				if (!marks[colIndex]) {
-					this._matrixMarks[rowIndex[colIndex]] = false
+					this._matrixMarks[rowIndex][colIndex] = false
 				}
-
 			}
 		}
 	}
@@ -86,7 +85,7 @@ class Checker {
 			const marks = checkArray(cols)
 			for (let rowIndex = 0; rowIndex < marks.length; rowIndex++) {
 				if (!marks[rowIndex]) {
-					this._matrixMarks[rowIndex[colIndex]] = false
+					this._matrixMarks[rowIndex][colIndex] = false
 				}
 			}
 		}
@@ -103,23 +102,23 @@ class Checker {
 						rowIndex,
 						colIndex
 					} = Toolkit.boxToolkit.convertFromBoxIndex(boxIndex, cellIndex)
-					this._matrixMarks[rowIndex[colIndex]] = false
+					this._matrixMarks[rowIndex][colIndex] = false
 				}
 			}
 		}
 	}
 }
 
-const Generator = require('./generator')
-const gen = new Generator
-gen.generate()
-const matrix = gen.matrix
-const checker = new Checker(matrix)
-console.log("check result", checker.check())
-console.log(checker.matrixMarks)
+// const Generator = require('./generator')
+// const gen = new Generator
+// gen.generate()
+// const matrix = gen.matrix
+// const checker = new Checker(matrix)
+// console.log("check result", checker.check())
+// console.log(checker.matrixMarks)
 
-matrix[1][1] = 0
-matrix[2][3] = matrix[3][5] = 5
-const checker2 = new Checker(matrix)
-console.log("check result", checker2.check())
-console.log(checker2._matrixMarks)
+// matrix[1][1] = 0
+// matrix[2][3] = matrix[3][5] = 5
+// const checker2 = new Checker(matrix)
+// console.log("check result", checker2.check())
+// console.log(checker2._matrixMarks)
