@@ -71,6 +71,16 @@ body>* {
       &.fixed {
         background-color: #eeeeee;
       }
+
+
+      &.mark1 {
+        background: lightpink;
+      }
+
+
+      &.mark2 {
+        background: limegreen;
+      }
     }
 
     &.row_g_bottom {
@@ -89,6 +99,22 @@ body>* {
       >span {
         border-bottom-width: 2px;
       }
+    }
+  }
+}
+
+@popupCellSize: 40px;
+
+.popup-num {
+  .container(); // less 可以继承样式
+  position: absolute;
+  padding-left: 0;
+
+  .row {
+    >span {
+      width: @popupCellSize;
+      height: @popupCellSize;
+      line-height: @popupCellSize;
     }
   }
 }

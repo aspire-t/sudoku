@@ -43,4 +43,12 @@ export class Grid {
         'font-size': width < 32 ? `${width / 2}px` : ''
       })
   }
+
+  bindPopup(popupNumbers) {
+    // console.log(this._container)
+    this._container.on('click', "span", e => {
+      const $cell = $(e.target)
+      popupNumbers.popup($cell)
+    })
+  }
 }
