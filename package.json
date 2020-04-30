@@ -10,7 +10,7 @@
   "dependencies": {
     "@types/jquery": "^3.3.31",
     "core-js": "^3.4.4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
